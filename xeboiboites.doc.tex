@@ -1,0 +1,321 @@
+\documentclass[11pt,oneside]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper,left=2.5cm,right=2.5cm, bottom=2.5cm,top=2.5cm]{geometry}
+\usepackage{xeboiboites}
+\usepackage{verbatim}
+\usepackage{amsmath,amssymb}
+\usepackage{lipsum}
+\DeclareTextFontCommand{\emph}{\bfseries}
+
+
+\newboxedtheorem[
+small box style={fill=gray!20,draw=black, rounded corners},
+big box style={fill=gray!10,draw=orange,thick,rounded corners},
+headfont=\bfseries,
+thcounter=section]{propbof}{Proposition}{compteurPROP}
+
+\newbreakabletheorem[small box style={draw=orange,fill=blue!20},
+    big box style={fill=blue!10,draw=orange}]
+    {propc}{Proposition}{somecounter}
+    
+\newboxedtheorem[small box style={fill=blue!20,draw=black, 
+    rounded corners},
+    big box style={fill=blue!10,draw=orange,thick,rounded corners},
+    headfont=\bfseries]%
+    {proposition}{Proposition}{somecounter}    
+    
+\newboxedtheorem[small box style={fill=blue!20,draw=black, line width=.7pt,
+                                    decoration={penciline},decorate},%
+    big box style={fill=blue!10,draw=black,thick, 
+        decoration={penciline},decorate},
+    headfont=\bfseries]%
+    {propb}{Proposition}{}
+
+
+\newboxedequation[big box style={fill=blue!10,%
+    thick,decoration=penciline,decorate}]%
+    {formula}      
+    
+
+
+\newbreakabletheorem[small box style={draw=orange,fill=blue!20},
+    big box style={fill=blue!10,draw=orange},
+    broken edges={decoration=zigzag}]
+    {propd}{Proposition}{test}    
+
+\newbreakabletheorem[small box style={draw=orange!30!black!20,%
+    fill=orange!10!black!2,decoration=penciline, decorate, thick},
+    big box style={color=orange!30!black!20,fill=orange!30!black!10,thick},
+    broken edges={draw=orange!30!black!20,thick,fill=orange!20!black!5, 
+        decoration={random steps, segment length=.5cm,%
+        amplitude=1.3mm},decorate},%
+    other edges={decoration=penciline,decorate,thick}]%
+    {parchment}{Parchment}{test}    
+
+\newparchment[small box style={draw=orange!30!black!20,%
+    fill=orange!10!black!2,decoration=penciline, decorate, thick},
+    big box style={color=orange!30!black!20,fill=orange!30!black!10,thick},
+    broken edges={draw=orange!30!black!20,thick,fill=orange!20!black!5, 
+        decoration={random steps, segment length=.4cm,%
+        amplitude=1.7mm},decorate},%
+    other edges={decoration=penciline,decorate,thick}]%
+    {parchmentb}{Parchment}{}     
+
+\newspanning[image=dessins/bulb,headfont=\bfseries,%
+    spanning style={very thick,decoration=penciline,decorate}]%
+    {method}{Method}{}
+  
+\newspanning[image=dessins/poisson,headfont=\itshape,%
+    spanning style={very thick,decoration=penciline,decorate}]%
+    {test}{Test}{}
+    
+\parindent 0pt
+\title{\Huge\bfseries xeboiboites}
+\author{Alexis Flesch}
+\begin{document}
+\maketitle
+
+\tableofcontents\clearpage
+
+\section{Introduction}
+
+This document describes the usage of the package \emph{xeboiboites}, which is a 
+rewrite of \emph{boiboites}. It allows breakable boxes as well as a few new 
+environments. This work is mainly based on:
+\begin{verbatim}
+http://www.texample.net/tikz/examples/boxes-with-text-and-math/
+http://tex.stackexchange.com/questions/39296/simulating-hand-drawn-lines
+http://www.texample.net/tikz/examples/framed-tikz/
+\end{verbatim}
+It is released under the CC BY-SA licence.
+
+\section{Non-breakable boxed theorems}
+
+\subsection{Overview}
+
+Creating a new boxed environment hasn't changed much since \emph{boiboites}, 
+except you now have control over (almost) everything tikz-related. Issuing:
+
+\begin{verbatim}
+\newboxedtheorem[options]{proposition}{Proposition}{somecounter}
+\end{verbatim}
+
+where \verb!proposition! is the name of the new environment, \verb!Proposition! 
+is the way it will be typeset and \verb!somecounter! is a counter name. If the 
+counter doesn't exist, it will be created, otherwise the new environment will 
+use the already existing counter. If no counter is given (that is, if you leave 
+the braces empty), then the proposition will not be numbered. As for the 
+options:
+\begin{itemize}
+    \item \verb!thcounter=chapter! will reinitialize the counter at each new 
+        chapter (you can of course use section, etc...).
+    \item \verb!size! is the width of the box, default is 
+        \verb!size=.9\textwidth!.
+    \item \verb!headfont! is issued before writing the title of the box. You 
+        might want to set for example \verb!headfont=\bfseries\large!.
+    \item \verb!small box style! is the style of, well, the small box in which 
+        the title will appear (see below for examples).
+    \item \verb!big box style! is the style of the main box in which the 
+        proposition will appear (see below for examples).
+\end{itemize}
+
+
+\subsection{Examples}
+
+
+\subsubsection{A simple box with rounded corners}
+\begin{verbatim}
+\newboxedtheorem[small box style={fill=blue!20,draw=black, rounded corners},
+    big box style={fill=blue!10,draw=orange,thick,rounded corners},
+    headfont=\bfseries]%
+    {proposition}{Proposition}{somecounter}
+\end{verbatim}
+
+
+\begin{proposition}[Law of large numbers]
+     Let $(X_n)_{n\in \mathbb{N}}$ be a sequence of mutually independent random 
+    variables such that $X_1 \in L^1$. Then :
+     \[\frac{1}{n} \sum_{i=1}^n X_i \overset{\textnormal{p.s.}}{\longrightarrow}
+         \mathbb{E} (X_1) .\]
+\end{proposition}
+
+
+\subsubsection{An example with a hand drawn effet}
+
+\begin{verbatim}
+\newboxedtheorem[small box style={fill=blue!20, draw=black, line width=.7pt,
+    decoration={penciline},decorate},
+    big box style={fill=blue!10,draw=black,thick,
+    decoration={penciline},decorate},
+    headfont=\bfseries]%
+    {proposition}{Proposition}{}
+\end{verbatim}
+
+
+\begin{propb}[Law of large numbers]
+     Let $(X_n)_{n\in \mathbb{N}}$ be a sequence of mutually independent random 
+     variables such that $X_1 \in L^1$. Then :
+     \[\frac{1}{n} \sum_{i=1}^n X_i \overset{\textnormal{p.s.}}{\longrightarrow}
+         \mathbb{E} (X_1) .\]
+\end{propb}
+
+\subsubsection{An example with no title}
+
+If for some reason you want to frame the results (say, a formula) using the same 
+style as the one for your theorems, here is a way to do it:
+\begin{verbatim}
+\newboxedequation[big box style={fill=blue!10,%
+    thick,decoration=penciline,decorate}]%
+    {formula}
+\end{verbatim}
+
+\begin{formula}
+    \[ \forall x\in\mathbb{R},\quad\sin(x) = x-\frac{x^3}{3!} + o(x^4).\]
+\end{formula}
+
+
+\section{Breakable boxed theorems}
+
+In some situations, you might want to have a box that spans over multiple pages.
+This is possible using the new macro:
+\begin{verbatim}
+\newbreakabletheorem[options]{proposition}{Proposition}{somecounter}
+\end{verbatim}
+The \verb!options! are exactly the same except as before except you also
+have control over the style of the edged of the big box (see examples below).
+
+
+
+\subsection{Examples}
+
+\begin{propc}
+    \lipsum[4-7]
+\end{propc}
+
+The above example was created using:
+\begin{verbatim}
+\newbreakabletheorem[small box style={draw=orange,fill=blue!20},
+    big box style={fill=blue!10,draw=orange}]
+    {proposition}{Proposition}{}
+\end{verbatim}
+
+You have the control over the decoration of the edges of the box, so you can,
+for example, add a decoration to the bottom/top edges when a pagebreak occurs:
+\begin{verbatim}
+\newbreakabletheorem[small box style={draw=orange,fill=blue!20},
+    big box style={fill=blue!10,draw=orange},
+    broken edges={decoration=zigzag}]
+    {proposition}{Proposition}{}  
+\end{verbatim}
+
+\begin{propd}
+    \lipsum[4-7]
+\end{propd}
+
+
+To apply a style to the edges after/before a pagebreak, use the
+parameter \verb!broken edges!. Use \verb!other edges! to customize the
+"normal" edges. Here is a more sophisticated example:
+
+\begin{verbatim}
+\newbreakabletheorem[small box style={draw=orange!30!black!20,%
+    fill=orange!10!black!2,decoration=penciline, decorate, thick},
+    big box style={color=orange!30!black!20,fill=orange!30!black!10,thick},
+    broken edges={draw=orange!30!black!20,thick,fill=orange!20!black!5, 
+        decoration={random steps, segment length=.5cm,%
+        amplitude=1.3mm},decorate},%
+    other edges={decoration=penciline,decorate,thick}]%
+    {parchment}{Parchment}{}
+\end{verbatim}
+
+
+\begin{parchment}
+    \lipsum[10-21]
+\end{parchment}
+
+Note that this might result in an overfull $\backslash$vbox due to the random
+effect and the fact that the framed environment has been
+resized with \verb!\hsize\size\FrameRestore!. I don't
+know how to get rid of it, but the parchment command below is a possible workaround
+(although compilation time is longer).
+
+
+
+\section{Breakable parchments}
+
+This is a rewrite of:
+\begin{verbatim}
+http://www.texample.net/tikz/examples/framed-tikz/
+\end{verbatim}
+
+as is almost everything here that concerns "breakable" environments. You can create
+a new parchment using the command:
+
+\begin{verbatim}
+\newparchment[options]{proposition}{Proposition}{somecounter}
+\end{verbatim}
+
+The options are the same as the ones for breakable theorems. The difference
+is that another layer has been added to make it look like the box was torn whenever
+a pagebreak occurs. I am not responsible for this great design, I only tweaked
+the code a little.
+
+\begin{parchmentb}
+    \lipsum[10-21]
+\end{parchmentb}
+
+The corresponding code:
+\begin{verbatim}
+\newparchment[small box style={draw=orange!30!black!20,%
+    fill=orange!10!black!2,decoration=penciline, decorate, thick},
+    big box style={color=orange!30!black!20,fill=orange!30!black!10,thick},
+    broken edges={draw=orange!30!black!20,thick,fill=orange!20!black!5, 
+        decoration={random steps, segment length=.4cm,%
+        amplitude=1.7mm},decorate},%
+    other edges={decoration=penciline,decorate,thick}]%
+    {parchment}{Parchment}{}      
+\end{verbatim}
+
+Once again, \verb!\hsize\size\FrameRestore! is making things difficult
+with the random effect and changing the random parameters might result
+in strange things (but no badbox as the \verb!overlay! option of tikz
+was used).
+
+If you use the option \verb!opacity=0! on the \verb!broken edges!, you'll
+get a similar result as the one presented in the previous section (but
+with a longer compilation time, of course).
+
+
+\section{A framed-like environment with a rule in the margin}
+
+Last but not least, an environment that can span over multiple pages with an
+image in the margin and a vertical rule all along the way. The bulb image in 
+this example was borrowed to \texttt{openclipart.org}.
+
+To create a new environment "method" for example, use:
+\begin{verbatim}
+\newspanning[options]{method}{Method}{somecounter}
+\end{verbatim}
+ The options here are
+\begin{itemize}
+    \item \verb!image! is the path to an image
+    \item \verb!headfont! is issued before writing the title of the
+        environment. You 
+        might want to set for example \verb!headfont=\bfseries\large!.
+    \item \verb!spanning style! is the style of the vertical rule
+\end{itemize}
+
+\begin{method}
+    \lipsum[1-10]
+\end{method}
+
+The corresponding code:
+\begin{verbatim}
+\newspanning[image=dessins/bulb,headfont=\bfseries,%
+    spanning style={very thick,decoration=penciline,decorate}]%
+    {method}{Method}{}
+\end{verbatim}
+where \verb!dessins/bulb! is the path to the bulb image on my computer.
+
+
+\end{document}
